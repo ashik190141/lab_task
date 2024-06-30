@@ -90,6 +90,8 @@ function drawLine(gl, positionBuffer, colorLocation, line, color) {
   gl.drawArrays(gl.LINES, 0, 2);
 }
 
+// input
+
 const INSIDE = 0;
 const LEFT = 1;
 const RIGHT = 2;
@@ -127,16 +129,23 @@ function cohenSutherlandClip(x1, y1, x2, y2) {
       let x, y;
       let outcodeOut = code1 !== 0 ? code1 : code2;
 
+      // Top clipping formula
       if (outcodeOut & TOP) {
         x = x1 + ((x2 - x1) * (y_max - y1)) / (y2 - y1);
         y = y_max;
-      } else if (outcodeOut & BOTTOM) {
+      }
+      // Bottom clipping formula
+      else if (outcodeOut & BOTTOM) {
         x = x1 + ((x2 - x1) * (y_min - y1)) / (y2 - y1);
         y = y_min;
-      } else if (outcodeOut & RIGHT) {
+      }
+      // right clipping
+      else if (outcodeOut & RIGHT) {
         y = y1 + ((y2 - y1) * (x_max - x1)) / (x2 - x1);
         x = x_max;
-      } else if (outcodeOut & LEFT) {
+      }
+      // left clipping
+      else if (outcodeOut & LEFT) {
         y = y1 + ((y2 - y1) * (x_min - x1)) / (x2 - x1);
         x = x_min;
       }
